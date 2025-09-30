@@ -56,12 +56,7 @@ const ListPage = () => {
     }
   }, [debouncedTerm])
 
-  const helperText = useMemo(() => {
-    if (loading) return 'Loading entries…'
-    if (error) return error
-    if (!entries.length) return 'No entries found.'
-    return null
-  }, [entries.length, error, loading])
+
 
   return (
     <div className="page">
@@ -85,9 +80,6 @@ const ListPage = () => {
         />
       </div>
 
-      {helperText ? (
-        <p className="statusText">{helperText}</p>
-      ) : (
         <ul className="entriesList">
           {entries.map((entry) => (
             <li key={entry.id}>
@@ -102,7 +94,6 @@ const ListPage = () => {
             </li>
           ))}
         </ul>
-      )}
     </div>
   )
 }

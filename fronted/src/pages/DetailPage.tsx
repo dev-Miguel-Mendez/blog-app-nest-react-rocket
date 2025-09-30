@@ -61,7 +61,6 @@ const DetailPage = () => {
         </Link>
       </div>
 
-      {loading && <p className="statusText">Loading entry…</p>}
       {error && <p className="statusText">{error}</p>}
 
       {!loading && !error && entry && (

@@ -2,17 +2,20 @@
 
 Este repositorio contiene una API REST de NestJS respaldada por PostgreSQL y Prisma, además de un cliente mìnimo de React. El backend expone endpoints tipados para entradas que el frontend consume, pero también puedes trabajar con la API de forma independiente.
 
-## Arquitectura del Backend
+# Arquitectura del Backend
 - `AppModule` conecta el `EntriesModule` específico del dominio con el `PrismaModule` compartido.
 - `EntriesController` mapea rutas REST a la capa de servicios; los DTO con Zod validan cada cuerpo de la petición antes de llegar a la base de datos.
 - `EntriesService` encapsula las consultas de Prisma para crear, listar, buscar y recuperar entradas individuales del blog.
 - `PrismaService` centraliza la conexión con PostgreSQL y reexporta el cliente de Prisma generado ubicado en `backend/generated/prisma`.
 
-## Referencia Rápida de la API
+# Referencia Rápida de la API
 - `POST /entries` — crea una entrada (`title`, `author`, `content` obligatorios).
 - `GET /entries` — lista todas las entradas, de la más reciente a la más antigua.
 - `GET /entries?q=term` — busca en el título, autor y contenido.
 - `GET /entries/:id` — obtiene una entrada por su identificador numérico.
+
+
+
 
 # Ejecutar la applicación con Docker (Recomendado)
 - Requisitos: Docker y Docker Compose.

@@ -1,61 +1,49 @@
-# Blog App (NestJS + React)
+# Aplicación de Blog (NestJS + React)
 
-This repository contains a NestJS REST API backed by PostgreSQL and Prisma, plus
-an optional React client. The backend exposes typed entry endpoints that the
-frontend consumes, but you can work with the API on its own.
+Este repositorio contiene una API REST de NestJS respaldada por PostgreSQL y Prisma, además de un cliente mìnimo de React. El backend expone endpoints tipados para entradas que el frontend consume, pero también puedes trabajar con la API de forma independiente.
 
-## Backend Architecture
-- `AppModule` wires the domain-specific `EntriesModule` together with the shared
-  `PrismaModule`.
-- `EntriesController` maps REST routes to the service layer; Zod-powered DTOs
-  validate every request body before reaching the database.
-- `EntriesService` encapsulates Prisma queries for creating, listing, searching,
-  and retrieving individual blog entries.
-- `PrismaService` centralizes the PostgreSQL connection and re-exports the
-  generated Prisma client located in `backend/generated/prisma`.
+## Arquitectura del Backend
+- `AppModule` conecta el `EntriesModule` específico del dominio con el `PrismaModule` compartido.
+- `EntriesController` mapea rutas REST a la capa de servicios; los DTO con Zod validan cada cuerpo de la petición antes de llegar a la base de datos.
+- `EntriesService` encapsula las consultas de Prisma para crear, listar, buscar y recuperar entradas individuales del blog.
+- `PrismaService` centraliza la conexión con PostgreSQL y reexporta el cliente de Prisma generado ubicado en `backend/generated/prisma`.
 
-## Run the Backend Without Docker
-1. Start PostgreSQL locally (or in another container) and create a database.
-   The default connection string is `postgres://postgres:postgres@localhost:5432/posts`.
-2. Inside `backend/`, create a `.env` file with your connection string:
+## Ejecutar el Backend sin Docker
+1. Inicia PostgreSQL localmente (o en otro contenedor) y crea una base de datos. La conexión predeterminada es `postgres://postgres:postgres@localhost:5432/posts`.
+2. Dentro de `backend/`, crea un archivo `.env` con tu conexión:
    ```env
    DATABASE_URL=postgres://postgres:postgres@localhost:5432/posts
    ```
-3. Install dependencies and generate the Prisma client:
+3. Instala las dependencias y genera el cliente de Prisma:
    ```bash
    npm install
    npx prisma generate
    ```
-4. Apply the schema migrations:
+4. Aplica las migraciones del esquema:
    ```bash
    npx prisma migrate dev
    ```
-5. Launch the API (hot-reload mode):
+5. Inicia la API (modo hot-reload):
    ```bash
    npm run start:dev
    ```
-   The server listens on `http://localhost:8001` by default (`PORT` overrides it).
+   El servidor escucha en `http://localhost:8001` por defecto (puedes sobrescribirlo con `PORT`).
 
-## Run the Stack With Docker
-- `docker compose up --build backend` builds the Nest image, applies migrations,
-  and starts the API alongside a PostgreSQL 16 instance (exposed on port 5435).
-- Add `frontend` to the command (or simply `docker compose up --build`) to run the
-  React client on `http://localhost:8000`.
-- Tear everything down with `docker compose down` (append `--volumes` to reset the database).
+## Ejecutar la applicación con Docker
+- `docker compose up --build backend` construye la imagen de Nest, aplica las migraciones y levanta la API junto a una instancia de PostgreSQL 16 (expuesta en el puerto 5435).
+- Agrega `frontend` al comando (o simplemente `docker compose up --build`) para ejecutar el cliente React en `http://localhost:8000`.
+- Detén todo con `docker compose down` (añade `--volumes` para reiniciar la base de datos).
 
-## API Quick Reference
-- `POST /entries` — create an entry (`title`, `author`, `content` required).
-- `GET /entries` — list all entries, newest first.
-- `GET /entries?q=term` — search across title, author, and content.
-- `GET /entries/:id` — fetch a single entry by numeric identifier.
+## Referencia Rápida de la API
+- `POST /entries` — crea una entrada (`title`, `author`, `content` obligatorios).
+- `GET /entries` — lista todas las entradas, de la más reciente a la más antigua.
+- `GET /entries?q=term` — busca en el título, autor y contenido.
+- `GET /entries/:id` — obtiene una entrada por su identificador numérico.
 
-## Frontend (Optional)
-The React client lives in `fronted/`. Provide the backend URL through
-`VITE_API_URL` (defaults to `http://localhost:8001`) and start it with
-`npm install && npm run dev`.
+## Frontend (Opcional)
+El cliente de React se encuentra en `fronted/`. Proporciona la URL del backend mediante `VITE_API_URL` (valor predeterminado `http://localhost:8001`) e inícialo con `npm install && npm run dev`.
 
-
-## Useful Commands
-- Run unit tests: `npm test`
-- Inspect the database visually: `npx prisma studio`
-- Lint the codebase: `npm run lint`
+## Comandos Útiles
+- Ejecutar pruebas unitarias: `npm test`
+- Inspeccionar la base de datos visualmente: `npx prisma studio`
+- Ejecutar el linter: `npm run lint`

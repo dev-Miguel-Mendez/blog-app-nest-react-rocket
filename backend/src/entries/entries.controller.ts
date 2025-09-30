@@ -7,7 +7,7 @@ export class EntriesController {
 
     constructor(private readonly entriesService: EntriesService){}
     
-    @Post() //$ POST localhost:3001/entries
+    @Post() //$ POST localhost:8001/entries
                 //* Adding extra validation pipe
     createEntry(@Body() CreateEntryDto: CreateEntryDto){
         return this.entriesService.create(CreateEntryDto)

@@ -42,5 +42,6 @@ Este repositorio contiene una API REST de NestJS respaldada por PostgreSQL y Pri
 
 ### Ejecutar el Cliente de React
 El cliente de React se encuentra en `fronted/`. Proporciona la URL del backend mediante `VITE_API_URL` (valor predeterminado `http://localhost:8001`) e inícialo con `npm install && npm run dev`.
+Por defecto el frontend escucha en `http://localhost:5173` 
 
 

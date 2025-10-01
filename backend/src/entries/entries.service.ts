@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateEntryDto } from './dto/create-entry.dto';
 
 @Injectable()
 export class EntriesService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: { title: string; author: string; content: string }) {
+  create(data: CreateEntryDto) {
     return this.prisma.entry.create({ data });
   }
 
@@ -19,9 +20,9 @@ export class EntriesService {
     return this.prisma.entry.findMany({
       where: {
         OR: [
-          { title: { contains: query } },
-          { author: { contains: query } },
-          { content: { contains: query } },
+          { title: { contains: query, mode: 'insensitive' } },
+          { author: { contains: query, mode: 'insensitive' } },
+          { content: { contains: query, mode: 'insensitive' } },
         ],
       },
     });
